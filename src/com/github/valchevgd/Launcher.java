@@ -1,9 +1,7 @@
 package com.github.valchevgd;
 
+import com.github.valchevgd.view.ViewFactory;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
@@ -15,11 +13,8 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("view/MainWindow.fxml"));
+        ViewFactory viewFactory = new ViewFactory(new EmailManager());
 
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-
-        stage.show();
+        viewFactory.showLoginWindow();
     }
 }
