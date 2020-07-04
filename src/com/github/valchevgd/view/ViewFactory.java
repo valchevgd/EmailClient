@@ -4,6 +4,7 @@ import com.github.valchevgd.EmailManager;
 import com.github.valchevgd.controller.BaseController;
 import com.github.valchevgd.controller.LoginWindowController;
 import com.github.valchevgd.controller.MainWindowController;
+import com.github.valchevgd.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +29,11 @@ public class ViewFactory {
     public void showMainWindow() {
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showOptionsWindow() {
+        BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
         initializeStage(controller);
     }
 
