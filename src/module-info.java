@@ -6,4 +6,5 @@ module EmailClient {
     requires javafx.web;
 
     opens com.github.valchevgd;
+    opens com.github.valchevgd.view;
 }
