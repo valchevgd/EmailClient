@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+<AnchorPane prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.valchevgd.controller.MainWindowController">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="800.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Open" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#optionsAction" text="Options" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TreeView fx:id="emailsTreeView" layoutY="27.0" prefHeight="524.0" prefWidth="224.0" />
+      <TableView fx:id="emailsTableView" layoutX="224.0" layoutY="27.0" prefHeight="200.0" prefWidth="576.0">
+        <columns>
+          <TableColumn prefWidth="129.0" text="Sender" />
+          <TableColumn prefWidth="146.0" text="Subject" />
+            <TableColumn prefWidth="125.0" text="Recipient" />
+            <TableColumn minWidth="0.0" prefWidth="67.0" text="Size" />
+            <TableColumn prefWidth="108.0" text="Date" />
+        </columns>
+      </TableView>
+      <WebView fx:id="emailWebView" layoutX="224.0" layoutY="227.0" prefHeight="324.0" prefWidth="576.0" />
+   </children>
+</AnchorPane>

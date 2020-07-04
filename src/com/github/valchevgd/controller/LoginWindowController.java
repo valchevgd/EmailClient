@@ -1,6 +1,5 @@
-package com.github.valchevgd.view;
+package com.github.valchevgd.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -17,7 +16,8 @@ public class LoginWindowController {
     @FXML
     public Label errorLabel;
 
-    public void loginButtonAction(ActionEvent actionEvent) {
+    @FXML
+    public void loginButtonAction() {
         System.out.println("Login press");
     }
 }
