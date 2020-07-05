@@ -13,7 +13,7 @@ public enum ColorTheme {
             case DEFAULT:
                 return "css/themeDefault.css";
             case LIGHT:
-                return "css/themeLight";
+                return "css/themeLight.css";
             default:
                 return null;
         }

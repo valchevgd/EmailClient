@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class ViewFactory {
 
     private final EmailManager emailManager;
-    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private ColorTheme colorTheme = ColorTheme.DARK;
     private FontSize fontSize = FontSize.MEDIUM;
-    private ArrayList<Stage> activeStages;
+    private final ArrayList<Stage> activeStages;
 
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
