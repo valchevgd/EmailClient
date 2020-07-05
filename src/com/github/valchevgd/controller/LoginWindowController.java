@@ -1,6 +1,9 @@
 package com.github.valchevgd.controller;
 
 import com.github.valchevgd.EmailManager;
+import com.github.valchevgd.model.EmailAccount;
+import com.github.valchevgd.services.EmailLoginResult;
+import com.github.valchevgd.services.LoginService;
 import com.github.valchevgd.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -25,9 +28,39 @@ public class LoginWindowController extends BaseController {
 
     @FXML
     public void loginButtonAction() {
-        viewFactory.showMainWindow();
 
-        Stage stage = (Stage) errorLabel.getScene().getWindow();
-        viewFactory.closeStage(stage);
+        if (fieldsAreValid()) {
+            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
+            LoginService loginService = new LoginService(emailAccount, emailManager);
+
+            EmailLoginResult loginResult = loginService.login();
+
+            switch (loginResult) {
+                case SUCCESS:
+                    System.out.println("SUCCESSFULLY LOGIN");
+                    break;
+            }
+
+            viewFactory.showMainWindow();
+
+            Stage stage = (Stage) errorLabel.getScene().getWindow();
+            viewFactory.closeStage(stage);
+        }
+    }
+
+    private boolean fieldsAreValid() {
+        boolean fieldsAreValid = true;
+
+        if (emailAddressField.getText().isEmpty()) {
+            errorLabel.setText(String.format("Please fill email%n"));
+            fieldsAreValid = false;
+        }
+
+        if (passwordField.getText().isBlank()) {
+            errorLabel.setText(errorLabel.getText() + "Please fill password");
+            fieldsAreValid = false;
+        }
+
+        return fieldsAreValid;
     }
 }
