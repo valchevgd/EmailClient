@@ -28,4 +28,9 @@ public class MainWindowController extends BaseController {
     public void optionsAction() {
         viewFactory.showOptionsWindow();
     }
+
+    @FXML
+    public void addAccountAction() {
+        viewFactory.showLoginWindow();
+    }
 }
