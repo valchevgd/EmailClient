@@ -33,18 +33,28 @@ public class LoginWindowController extends BaseController {
             EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
             LoginService loginService = new LoginService(emailAccount, emailManager);
 
-            EmailLoginResult loginResult = loginService.login();
+            loginService.start();
+            loginService.setOnSucceeded(e -> {
+                EmailLoginResult loginResult = loginService.getValue();
 
-            switch (loginResult) {
-                case SUCCESS:
-                    System.out.println("SUCCESSFULLY LOGIN");
-                    break;
-            }
+                switch (loginResult) {
+                    case SUCCESS:
+                        System.out.println("SUCCESSFULLY LOGIN");
+                        viewFactory.showMainWindow();
 
-            viewFactory.showMainWindow();
-
-            Stage stage = (Stage) errorLabel.getScene().getWindow();
-            viewFactory.closeStage(stage);
+                        Stage stage = (Stage) errorLabel.getScene().getWindow();
+                        viewFactory.closeStage(stage);
+                        return;
+                    case FAILED_BY_CREDENTIALS:
+                        errorLabel.setText("Invalid credentials");
+                        return;
+                    case FAILED_BY_UNEXPECTED_ERROR:
+                        errorLabel.setText("Unexpected error");
+                        return;
+                    default:
+                        return;
+                }
+            });
         }
     }
 
