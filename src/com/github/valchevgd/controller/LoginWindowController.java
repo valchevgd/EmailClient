@@ -39,8 +39,10 @@ public class LoginWindowController extends BaseController {
 
                 switch (loginResult) {
                     case SUCCESS:
-                        System.out.println("SUCCESSFULLY LOGIN");
-                        viewFactory.showMainWindow();
+                        if (!viewFactory.isMainViewInitialized()) {
+
+                            viewFactory.showMainWindow();
+                        }
 
                         Stage stage = (Stage) errorLabel.getScene().getWindow();
                         viewFactory.closeStage(stage);
