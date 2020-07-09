@@ -1,22 +1,21 @@
 package com.github.valchevgd;
 
 import com.github.valchevgd.model.EmailAccount;
-import javafx.scene.control.TreeItem;
+import com.github.valchevgd.model.EmailTreeItem;
+import com.github.valchevgd.services.FetchFolderService;
 
 public class EmailManager {
 
-    private final TreeItem<String> foldersRoot = new TreeItem<>("");
+    private final EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
 
-    public TreeItem<String> getFoldersRoot() {
+    public EmailTreeItem<String> getFoldersRoot() {
         return foldersRoot;
     }
 
     public void addEmailAccount(EmailAccount emailAccount) {
-        TreeItem<String> treeItem = new TreeItem<>(emailAccount.getAddress());
-        treeItem.setExpanded(true);
-        treeItem.getChildren().add(new TreeItem<>("Inbox"));
-        treeItem.getChildren().add(new TreeItem<>("Send"));
-        treeItem.getChildren().add(new TreeItem<>("Spam"));
+        EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
+        FetchFolderService fetchFolderService = new FetchFolderService(emailAccount.getStore(), treeItem);
+        fetchFolderService.start();
         foldersRoot.getChildren().add(treeItem);
     }
 }
