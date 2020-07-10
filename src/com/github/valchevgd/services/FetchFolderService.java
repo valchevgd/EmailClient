@@ -40,10 +40,36 @@ public class FetchFolderService extends Service<Void> {
             foldersRoot.getChildren().add(emailTreeItem);
             foldersRoot.setExpanded(true);
 
+            touchMessagesOnFolder(folder, emailTreeItem);
             if (folder.getType() == Folder.HOLDS_FOLDERS) {
                 Folder[] subFolders = folder.list();
                 handleFolders(subFolders, emailTreeItem);
             }
         }
+    }
+
+    private void touchMessagesOnFolder(Folder folder, EmailTreeItem<String> emailTreeItem) {
+        Service fetchMessagesService = new Service() {
+            @Override
+            protected Task createTask() {
+                return new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        if (folder.getType() != Folder.HOLDS_FOLDERS) {
+                            folder.open(Folder.READ_WRITE);
+
+                            int size = folder.getMessageCount();
+
+                            for (int i = size; i > 0; i--) {
+                                
+                            }
+                        }
+                        return null;
+                    }
+                };
+            }
+        };
+
+        fetchMessagesService.start();
     }
 }
