@@ -1,14 +1,19 @@
 package com.github.valchevgd.controller;
 
 import com.github.valchevgd.EmailManager;
+import com.github.valchevgd.model.EmailMessage;
+import com.github.valchevgd.model.EmailTreeItem;
 import com.github.valchevgd.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
@@ -17,7 +22,22 @@ public class MainWindowController extends BaseController implements Initializabl
     public TreeView<String> emailsTreeView;
 
     @FXML
-    public TableView emailsTableView;
+    public TableView<EmailMessage> emailsTableView;
+
+    @FXML
+    private TableColumn<EmailMessage, String> senderColumn;
+
+    @FXML
+    private TableColumn<EmailMessage, String> subjectColumn;
+
+    @FXML
+    private TableColumn<EmailMessage, String> recipientColumn;
+
+    @FXML
+    private TableColumn<EmailMessage, Integer> sizeColumn;
+
+    @FXML
+    private TableColumn<EmailMessage, Date> dateColumn;
 
     @FXML
     public WebView emailWebView;
@@ -41,6 +61,25 @@ public class MainWindowController extends BaseController implements Initializabl
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpEmailsTreeView();
+        setUpEmailsTableView();
+        setUpFolderSelection();
+    }
+
+    private void setUpFolderSelection() {
+        emailsTreeView.setOnMouseClicked(e -> {
+            EmailTreeItem<String> item = (EmailTreeItem<String>)emailsTreeView.getSelectionModel().getSelectedItem();
+            if (item != null) {
+                emailsTableView.setItems(item.getEmailMessages());
+            }
+        });
+    }
+
+    private void setUpEmailsTableView() {
+        senderColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("sender")));
+        subjectColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("subject")));
+        recipientColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("recipient")));
+        sizeColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, Integer>("size")));
+        dateColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, Date>("date")));
     }
 
     private void setUpEmailsTreeView() {

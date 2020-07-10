@@ -10,4 +10,5 @@ module EmailClient {
     opens com.github.valchevgd;
     opens com.github.valchevgd.view;
     opens com.github.valchevgd.controller;
+    opens com.github.valchevgd.model;
 }

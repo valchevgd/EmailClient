@@ -61,7 +61,7 @@ public class FetchFolderService extends Service<Void> {
                             int size = folder.getMessageCount();
 
                             for (int i = size; i > 0; i--) {
-                                
+                                emailTreeItem.addEmail(folder.getMessage(i));
                             }
                         }
                         return null;
