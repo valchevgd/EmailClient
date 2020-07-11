@@ -5,6 +5,8 @@ import com.github.valchevgd.model.EmailMessage;
 import com.github.valchevgd.model.EmailTreeItem;
 import com.github.valchevgd.services.FetchFolderService;
 import com.github.valchevgd.services.FolderUpdaterService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -18,10 +20,15 @@ public class EmailManager {
     private FolderUpdaterService folderUpdaterService;
     private EmailMessage selectedMessage;
     private EmailTreeItem<String> selectedFolder;
+    private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
 
     public EmailManager() {
         folderUpdaterService = new FolderUpdaterService(foldersList);
         folderUpdaterService.start();
+    }
+
+    public ObservableList<EmailAccount> getEmailAccounts() {
+        return emailAccounts;
     }
 
     public EmailMessage getSelectedMessage() {
@@ -49,6 +56,7 @@ public class EmailManager {
     }
 
     public void addEmailAccount(EmailAccount emailAccount) {
+        emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
         FetchFolderService fetchFolderService = new FetchFolderService(emailAccount.getStore(), treeItem, foldersList);
         fetchFolderService.start();

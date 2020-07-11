@@ -1,10 +1,7 @@
 package com.github.valchevgd.view;
 
 import com.github.valchevgd.EmailManager;
-import com.github.valchevgd.controller.BaseController;
-import com.github.valchevgd.controller.LoginWindowController;
-import com.github.valchevgd.controller.MainWindowController;
-import com.github.valchevgd.controller.OptionsWindowController;
+import com.github.valchevgd.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -61,6 +58,11 @@ public class ViewFactory {
 
     public void showOptionsWindow() {
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showComposeMessageWindow() {
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
         initializeStage(controller);
     }
 
