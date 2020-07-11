@@ -1,6 +1,7 @@
 package com.github.valchevgd.services;
 
 import com.github.valchevgd.model.EmailTreeItem;
+import com.github.valchevgd.view.IconResolver;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -17,6 +18,7 @@ public class FetchFolderService extends Service<Void> {
     private Store store;
     private EmailTreeItem<String> foldersRoot;
     private List<Folder> foldersList;
+    private IconResolver iconResolver = new IconResolver();
 
     public FetchFolderService(Store store, EmailTreeItem<String> foldersRoot, List<Folder> foldersList) {
         this.store = store;
@@ -44,6 +46,8 @@ public class FetchFolderService extends Service<Void> {
         for (Folder folder : folders) {
             foldersList.add(folder);
             EmailTreeItem<String> emailTreeItem = new EmailTreeItem<>(folder.getName());
+            emailTreeItem.setGraphic(iconResolver.getIconForFolder(folder.getName()));
+
             foldersRoot.getChildren().add(emailTreeItem);
             foldersRoot.setExpanded(true);
 
