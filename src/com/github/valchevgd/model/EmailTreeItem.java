@@ -26,23 +26,14 @@ public class EmailTreeItem<String> extends TreeItem<String> {
     }
 
     public void addEmail(Message message) throws MessagingException {
-        boolean messageIsRead = message.getFlags().contains(Flags.Flag.SEEN);
-
-        EmailMessage emailMessage = new EmailMessage(
-                message.getSubject(),
-                message.getFrom()[0].toString(),
-                message.getRecipients(MimeMessage.RecipientType.TO)[0].toString(),
-                message.getSize(),
-                message.getSentDate(),
-                messageIsRead,
-                message
-        );
-
+        EmailMessage emailMessage = fetchMessage(message);
         emailMessages.add(emailMessage);
+    }
 
-        if (! messageIsRead) {
-            incrementMessagesCount();
-        }
+
+    public void addEmailToTop(Message message) throws MessagingException {
+        EmailMessage emailMessage = fetchMessage(message);
+        emailMessages.add(0, emailMessage);
     }
 
     public void incrementMessagesCount() {
@@ -56,5 +47,25 @@ public class EmailTreeItem<String> extends TreeItem<String> {
         } else {
             this.setValue(name);
         }
+    }
+
+    private EmailMessage fetchMessage(Message message) throws MessagingException {
+        boolean messageIsRead = message.getFlags().contains(Flags.Flag.SEEN);
+
+        EmailMessage emailMessage = new EmailMessage(
+                message.getSubject(),
+                message.getFrom()[0].toString(),
+                message.getRecipients(MimeMessage.RecipientType.TO)[0].toString(),
+                message.getSize(),
+                message.getSentDate(),
+                messageIsRead,
+                message
+        );
+
+        if (! messageIsRead) {
+            incrementMessagesCount();
+        }
+
+        return emailMessage;
     }
 }
