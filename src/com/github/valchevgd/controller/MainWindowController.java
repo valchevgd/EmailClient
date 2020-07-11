@@ -3,6 +3,7 @@ package com.github.valchevgd.controller;
 import com.github.valchevgd.EmailManager;
 import com.github.valchevgd.model.EmailMessage;
 import com.github.valchevgd.model.EmailTreeItem;
+import com.github.valchevgd.model.SizeInteger;
 import com.github.valchevgd.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +37,7 @@ public class MainWindowController extends BaseController implements Initializabl
     private TableColumn<EmailMessage, String> recipientColumn;
 
     @FXML
-    private TableColumn<EmailMessage, Integer> sizeColumn;
+    private TableColumn<EmailMessage, SizeInteger> sizeColumn;
 
     @FXML
     private TableColumn<EmailMessage, Date> dateColumn;
@@ -102,7 +103,7 @@ public class MainWindowController extends BaseController implements Initializabl
         senderColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("sender")));
         subjectColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("subject")));
         recipientColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("recipient")));
-        sizeColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, Integer>("size")));
+        sizeColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, SizeInteger>("size")));
         dateColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, Date>("date")));
     }
 
