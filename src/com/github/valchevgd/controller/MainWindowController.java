@@ -8,10 +8,7 @@ import com.github.valchevgd.services.MessageRendererService;
 import com.github.valchevgd.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
@@ -21,6 +18,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
+
+    private MenuItem markUnread = new MenuItem("Mark As Unread");
+    private MenuItem deleteMessage = new MenuItem("Delete Message");
 
     @FXML
     public TreeView<String> emailsTreeView;
@@ -72,6 +72,18 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpBoldRows();
         setUpMessageRenderService();
         setUpMessageSelection();
+        setUpContextMenus();
+    }
+
+    private void setUpContextMenus() {
+        markUnread.setOnAction(e -> {
+            emailManager.setMessageToUnread();
+        });
+
+        deleteMessage.setOnAction(e -> {
+            emailManager.deleteSelectedMessage();
+            emailWebView.getEngine().loadContent("");
+        });
     }
 
     private void setUpMessageSelection() {
@@ -131,6 +143,8 @@ public class MainWindowController extends BaseController implements Initializabl
         recipientColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("recipient")));
         sizeColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, SizeInteger>("size")));
         dateColumn.setCellValueFactory((new PropertyValueFactory<EmailMessage, Date>("date")));
+
+        emailsTableView.setContextMenu(new ContextMenu(markUnread, deleteMessage));
     }
 
     private void setUpEmailsTreeView() {
