@@ -4,6 +4,7 @@ import com.github.valchevgd.EmailManager;
 import com.github.valchevgd.model.EmailMessage;
 import com.github.valchevgd.model.EmailTreeItem;
 import com.github.valchevgd.model.SizeInteger;
+import com.github.valchevgd.services.MessageRendererService;
 import com.github.valchevgd.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +46,8 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     public WebView emailWebView;
 
+    private MessageRendererService messageRendererService;
+
     public MainWindowController(EmailManager emailManager,
                                 ViewFactory viewFactory,
                                 String fxmlName) {
@@ -67,6 +70,22 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpEmailsTableView();
         setUpFolderSelection();
         setUpBoldRows();
+        setUpMessageRenderService();
+        setUpMessageSelection();
+    }
+
+    private void setUpMessageSelection() {
+        emailsTableView.setOnMouseClicked(e -> {
+            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+            if (emailMessage != null) {
+                messageRendererService.setEmailMessage(emailMessage);
+                messageRendererService.restart();
+            }
+        });
+    }
+
+    private void setUpMessageRenderService() {
+        messageRendererService = new MessageRendererService(emailWebView.getEngine());
     }
 
     private void setUpBoldRows() {
