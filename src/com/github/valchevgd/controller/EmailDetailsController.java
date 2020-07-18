@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class EmailDetailsController extends BaseController implements Initializable {
 
-    private final String DOWNLOADS_LOCATION = System.getProperty("user.home") + "/Downloads/";
+    private final String DOWNLOADS_LOCATION = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
 
     @FXML
     private WebView webView;
